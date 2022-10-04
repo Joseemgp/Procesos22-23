@@ -3,7 +3,7 @@ const fs=require("fs");
 const express = require('express');
 //const uuid = require('uuid/v4');
 const app = express();
-const modelo = require("./servidor/modelo.js");
+const modelo = require("./Servidor/modelo.js");
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.use(express.static(__dirname + "/"));
 app.get("/", function(request,response){
-  var contenido=fs.readFileSync(__dirname+"/cliente/index.html");
+  var contenido=fs.readFileSync(__dirname+"/Cliente/index.html");
   response.setHeader("Content-type","text/html");
   response.send(contenido);
 });

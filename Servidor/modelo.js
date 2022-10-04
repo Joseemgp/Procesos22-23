@@ -3,10 +3,10 @@ function Juego(){
     this.usuarios={};//array asociativo
 
     this.agregarUsuario=function(nick){
-        let res={nick:-1};
+        let res={"nick":-1};
                 if(!this.usuarios[nick]){
             this.usuarios[nick]=new Usuario(nick,this)
-            res={nick:nick};
+            res={"nick":nick};
             console.log("Nuevo usuario:"+nick);
         }
         return res;
