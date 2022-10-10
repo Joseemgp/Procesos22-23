@@ -9,12 +9,12 @@ const PORT = process.env.PORT || 3000;
 
 let juego =new modelo.Juego();
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res
     .status(200)
     .send("Hola")
     .end();
-});
+});*/
 
 
 
