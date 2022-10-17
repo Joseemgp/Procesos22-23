@@ -36,15 +36,7 @@ app.get("/agregarUsuario/:nick",function(request,response){
 app.get("/crearPartida/:nick",function(request,response){
   let nick =request.params.nick;
   let res = juego.jugadorCreaPartida(nick);
-  /*let usr=juego.usuarios[nick];
-  let res={codigo:-1};
-  let codigo
-  if(usr){
-    codigo=usr.crearPartida();
-    res={codigo:codigo}
-  }*/
-
-  response.send(res);
+   response.send(res);
 });
 
 app.get("/unirseAPartida/:codigo/:usr",function(request,response){
@@ -60,8 +52,9 @@ app.get("/obtenerPartidas"),function(request,response){
   response.send(lista);
 }
 app.get("/obtenerPartidasDisponibles",function(request,response){
-  
-})
+  let lista=juego.obtenerPartidasDisponibles();
+  response.send(lista);
+});
 
 app.listen(PORT, () => {
   console.log(`App esta escuchando en el puerto  ${PORT}`);

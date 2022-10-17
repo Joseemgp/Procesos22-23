@@ -10,7 +10,7 @@ function ControlWeb(){
         cadena=cadena+'<button id="btnAU" class="btn btn-primary mb-2 mr-sm-2">Iniciar sesión</button>';
         //cadena=cadena+'<a href="/auth/google" class="btn btn-primary mb-2 mr-sm-2">Accede con Google</a>';
         cadena=cadena+'</div></div>'; //' </form>';
-        cadena=cadena+'<div id="nota"></div></div></div>';
+        cadena=cadena+'<div id="nota"></div></div>';
 
         $("#agregarUsuario").append(cadena);     
         //$("#nota").append("<div id='aviso' style='text-align:right'>Inicia sesión con Google para jugar</div>");    
@@ -31,19 +31,83 @@ function ControlWeb(){
     }
     this.mostrarHome=function(){
         $('#mH').remove();
-        var cadena= '<div id="mH">';//'<form class="form-row needs-validation"  id="mAJ">';
+        var cadena= '<div clas="row" id="mH">';//'<form class="form-row needs-validation"  id="mAJ">';
+        cadena=cadena+'<div class="col">'
         cadena=cadena+"<p>Bienvenido "+rest.nick+"</p>";
-        cadena=cadena+'</div>'
+        cadena=cadena+"<div id='codigo'></div>"
+        cadena=cadena+'</div></div>'
         $('#agregarUsuario').append(cadena);
+        this.mostrarCrearPartida();
     }
 
     this.mostrarCrearPartida=function(){
+        $('mCP').remove();
 //dibujar un boton , que al hacer click llame a crear partida de rest
-    }
-    this.mostrarListaDePartidas=function(){
-        //crear un control visual tipo lista para mostrar la lista de partida y permitir unirse con un click a la partida seleccionada
+        var cadena= '<div class="row" id="mCP">';//'<form class="form-row needs-validation"  id="mAJ">';
+        cadena=cadena+'<div class="col">'
+        cadena=cadena+'<button id="btnCP" class="btn btn-primary mb-2 mr-sm-2">Crear Partida</button>';
+        
+        cadena=cadena+'</div></div>';
+        //cadena=cadena+'<div id="nota2"></div></div></div>';
 
+
+        $("#crearPartida").append(cadena);     
+        //$("#nota").append("<div id='aviso' style='text-align:right'>Inicia sesión con Google para jugar</div>");    
+
+        $("#btnCP").on("click",function(e){
+                //var nick=$('#usr').val();
+                $("#mCP").remove();
+                $('#mLP').remove();
+                $("#aviso").remove();
+                rest.crearPartida();
+                
+            }
+        )
     }
+
+    this.mostrarCodigo=function(codigo){
+        let cadena="Codigo de la partida: " + codigo;
+        $('#codigo').append(codigo);
+    }
+    
+        //crear un control visual tipo lista para mostrar la lista de partida y permitir unirse con un click a la partida seleccionada
+        this.mostrarListaDePartidas=function(lista){
+            $('#mLP').remove();
+            let cadena="<div id='mLP'>";
+            cadena=cadena+'<ul class="list-group">';
+            for(i=0;i<lista.length;i++){
+              cadena = cadena+'<li class="list-group-item">'+lista[i].codigo+' propietario: '+lista[i].owner+'</li>';
+            }
+            cadena=cadena+"</ul>";
+            cadena=cadena+"</div>"
+            $('#listaPartidas').append(cadena);
+            
+    
+        }
+
+        this.mostrarListaDePartidasDisponibles=function(lista){
+            $('#mLP').remove();
+            let cadena="<div class='row' id='mLP'>";
+            cadena=cadena+"<div class='col'>";
+            cadena=cadena+"<h3>Lista de partidas disponibles</h3>";
+            cadena=cadena+'<ul class="list-group">';
+            for(i=0;i<lista.length;i++){
+              cadena = cadena+'<li class="list-group-item"><a href="#" value="'+lista[i].codigo+'"> Nick propietario: '+lista[i].owner+'</a></li>';
+            }
+            cadena=cadena+"</ul>";
+            cadena=cadena+"</div></div>"
+            $('#listaPartidas').append(cadena);
+    
+            $(".list-group a").click(function(){
+                codigo=$(this).attr("value");
+                   console.log(codigo);
+                if (codigo){
+                    $('#mLP').remove();
+                    $('#mCP').remove();
+                    rest.unirseAPartida(codigo);
+                }
+            });		
+        }
 
 
 }
