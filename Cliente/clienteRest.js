@@ -11,14 +11,15 @@ function ClienteRest(){
                 cli.nick=data.nick
                 
 				//ws.nick=data.nick;
-				//$.cookie("nick",ws.nick);
-				cli.obtenerListaPartidasDisponibles();
+				
+				//cli.obtenerListaPartidasDisponibles();
+				$.cookie("nick",data.nick);
 				iu.mostrarHome();
                 //iu.mostrarCrearPartida();
 			}
 			else{
                 console.log("No se ha podido registrar el usuario")
-				//iu.mostrarModal("El nick ya está en uso");
+				iu.mostrarModal("El nick ya está en uso");
 				iu.mostrarAgregarUsuario();
                 
 			}
@@ -34,6 +35,7 @@ function ClienteRest(){
                
                 console.log("Partida creada con codigo"+data.codigo+"por el usuario"+data.nick)
 				iu.mostrarCodigo(data.codigo);
+				//$c
                 //ws.codigo=data.codigo;
             }else{
                 console.log("No se ha podido crear la partida")
