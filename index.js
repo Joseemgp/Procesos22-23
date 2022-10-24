@@ -3,11 +3,19 @@ const fs=require("fs");
 const express = require('express');
 //const uuid = require('uuid/v4');
 const app = express();
+
+const http = require('http');
+const server=http.createServer(app)
+const {Server}=require("socket.io");
+const io =new Server(server);
+
 const modelo = require("./Servidor/modelo.js");
+const sWS=require("./Servidor/servidorWS.js")
 
 const PORT = process.env.PORT || 3000;
 
 let juego =new modelo.Juego();
+let servidorWS=new sWS.ServidorWS();
 
 /*app.get('/', (req, res) => {
   res
@@ -56,7 +64,13 @@ app.get("/obtenerPartidasDisponibles",function(request,response){
   response.send(lista);
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App esta escuchando en el puerto  ${PORT}`);
   console.log(' Ctrl+C pa salir.');
 });
+
+sWS.ServidorWS.lanzarServidorWS(io,juego);
+/*app.listen(PORT, () => {
+  console.log(`App esta escuchando en el puerto  ${PORT}`);
+  console.log(' Ctrl+C pa salir.');
+});*/
