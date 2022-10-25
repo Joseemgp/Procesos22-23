@@ -72,6 +72,11 @@ function Juego(){
             }
             return lista;
         }
+
+
+        this.obtenerPartida=function(codigo){
+            return this.partidas[codigo];
+        }
     
 }
 
@@ -113,6 +118,9 @@ function Partida(codigo,usr){
     }
     this.hayHueco=function(){
         return (this.jugadores.length<this.maxJugadores)
+    }
+    this.esJugando=function(){
+        return this.fase=="Jugando";
     }
     this.agregarJugador(this.owner);
 

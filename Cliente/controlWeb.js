@@ -93,8 +93,8 @@ function ControlWeb(){
                 $("#mCP").remove();
                 $('#mLP').remove();
                 //$("#aviso").remove();
-                rest.crearPartida();
-                
+                //rest.crearPartida();
+                cws.crearPartida();
             }
         )
     }
@@ -139,7 +139,7 @@ function ControlWeb(){
                 if (codigo){
                     $('#mLP').remove();
                     $('#mCP').remove();
-                    rest.unirseAPartida(codigo);
+                    cws.unirseAPartida(codigo);
                 }
             });	
             $("#btnAL").on("click",function(e){		

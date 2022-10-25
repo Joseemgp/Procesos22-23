@@ -14,6 +14,7 @@ function ClienteRest(){
 				
 				//cli.obtenerListaPartidasDisponibles();
 				$.cookie("nick",data.nick);
+				cws.conectar();
 				iu.mostrarHome();
                 //iu.mostrarCrearPartida();
 			}
@@ -78,6 +79,14 @@ function ClienteRest(){
 			console.log(lista);
 			iu.mostrarListaDePartidasDisponibles(lista);
 		});
+	}
+
+	this.usuarioSale=function(){
+		let nick=this.nick;
+		$.getJSON("/salir/"+nick,function(){
+			$.removeCookie("nick");
+			iu.comprobarCookie();
+		})
 	}
 
 }
