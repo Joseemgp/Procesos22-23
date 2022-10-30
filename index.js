@@ -64,6 +64,12 @@ app.get("/obtenerPartidasDisponibles",function(request,response){
   response.send(lista);
 });
 
+app.get("/salir/:nick",function(request,response){
+  let nick=request.params.nick;
+  juego.usuarioSale(nick);
+  response.send({res:"ok"})
+})
+
 server.listen(PORT, () => {
   console.log(`App esta escuchando en el puerto  ${PORT}`);
   console.log(' Ctrl+C pa salir.');

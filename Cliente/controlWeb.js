@@ -68,6 +68,7 @@ function ControlWeb(){
             $('#mH').remove();
             $.removeCookie("nick");
             iu.comprobarCookie();
+            rest.usuarioSale();
            
             
         });
