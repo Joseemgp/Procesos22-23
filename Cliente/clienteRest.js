@@ -27,7 +27,32 @@ function ClienteRest(){
 		})
 	}
 
-    this.crearPartida=function(){
+	this.comprobarUsuario=function(){
+		let cli=this;
+		$.getJSON("/comprobarUsuario/"+this.nick,function(data){
+			//console.log(data);
+			if (data.nick!=-1){
+				console.log("Usuario"+data.nick+"activo")
+                //cli.nick=data.nick
+                
+				//ws.nick=data.nick;
+				
+				//cli.obtenerListaPartidasDisponibles();
+				//$.cookie("nick",data.nick);
+				cws.conectar();
+				iu.mostrarHome();
+                //iu.mostrarCrearPartida();
+			}
+			else{
+                console.log("el usuario no esta activo")
+				//iu.mostrarModal("El nick ya está en uso");
+				iu.mostrarAgregarUsuario();
+                
+			}
+		});
+	}
+
+    /*this.crearPartida=function(){
         let cli=this;
 		let nick=cli.nick;
         $.getJSON("/crearPartida/"+nick,function(data){
@@ -63,7 +88,7 @@ function ClienteRest(){
 				//iu.mostrarAgregarJugador();
 			}
 		});
-	}
+	}*/
 
     this.obtenerListaPartidas=function(){
 		let cli=this;

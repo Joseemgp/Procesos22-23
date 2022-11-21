@@ -1,6 +1,6 @@
 function ClienteWS(){
-    this.socket=io();
-    
+    this.socket;
+    this.codigo;
         //enviar peticiones
         this.conectar=function(){
             this.socket=io();
@@ -11,8 +11,22 @@ function ClienteWS(){
             this.socket.emit("crearPartida",rest.nick);
         }
 
-        this.unirseAPartida=function(){
-            this.socket.emit("unirseAPartida",rest.nick,cws.codigo)
+        this.unirseAPartida=function(codigo){
+            this.socket.emit("unirseAPartida",rest.nick,codigo)
+        }
+
+        this.abandonarPartida=function(){
+            this.socket.emit("abandonarPartida",rest.nick,cws.codigo)
+        }
+       this.colocarBarco=function(nombre,x,y){
+            this.socket.emit("colocarBarco",rest.nick, nombre, x,y)
+        }
+        this.barcosDesplegados=function(){
+            this.socket.emit("barcosDesplegados",rest.nick)
+
+        }
+        this.disparar=function(x,y){
+            this.socket.emit("disparar",rest.nick,x,y)
         }
 
         //gestionar peticiones 
@@ -23,20 +37,23 @@ function ClienteWS(){
                 console.log(data);
                 if(data.codigo!=-1){
                    
-                    console.log("Partida creada con codigo"+data.codigo+"por el usuario"+data.nick)
+                    console.log("Partida creada con codigo"+data.codigo+"por el usuario"+rest.nick)
                     iu.mostrarCodigo(data.codigo);
-                    
+                    cli.codigo=data.codigo;
                 }else{
                     console.log("No se ha podido crear la partida")
+                    iu.mostrarModal
+                    rest.comprobarUsuario();
                 }
             })
             this.socket.on("unidoAPartida",function(data){
                 if (data.codigo!=-1){
-                    console.log("Usuario "+cli.nick+" se une a partida codigo: "+data.codigo);
+                    console.log("Usuario "+rest.nick+" se une a partida codigo: "+data.codigo);
                     iu.mostrarCodigo(data.codigo);
                     //ws.nick=data.nick;
                     //$.cookie("nick",ws.nick);
                     //iu.mostrarHome(data);
+                    cli.codigo=data.codigo;
                 }
                 else{
                     console.log("No se ha podido unir a partida")
@@ -44,6 +61,25 @@ function ClienteWS(){
                     //iu.mostrarAgregarJugador();
                 }
             })
+
+            this.socket.on("actualizarListaPartidas",function(lista){
+                if (!cli.codigo){
+                    iu.mostrarListaDePartidasDisponibles(lista);
+                }
+            });
+
+            /*this.socket.on("esperandoRival",function()){
+                    console.log("")
+            }*/
+            
+            this.socket.on("aJugar",function(){
+                iu.mostrarModal("A jugaaar!");
+            })
+
+            this.soc
+
+
+
             
         }
 }

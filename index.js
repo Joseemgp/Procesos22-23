@@ -6,13 +6,13 @@ const app = express();
 
 const http = require('http');
 const server=http.createServer(app)
-const {Server}=require("socket.io");
+const { Server }=require("socket.io");
 const io =new Server(server);
 
 const modelo = require("./Servidor/modelo.js");
 const sWS=require("./Servidor/servidorWS.js")
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 let juego =new modelo.Juego();
 let servidorWS=new sWS.ServidorWS();
@@ -40,6 +40,16 @@ app.get("/agregarUsuario/:nick",function(request,response){
   res=juego.agregarUsuario(nick);
   response.send(res);
 });
+
+app.get("/comprobarUusario/:nick",function(request,response){
+  let nick=request.params.nick;
+  let us=juego.obtenerUsuario(nick)
+  let res={"nick":-1};
+  if(us){
+    res.nick=us.nick;
+  }
+  response.send(res);
+})
 
 app.get("/crearPartida/:nick",function(request,response){
   let nick =request.params.nick;
@@ -75,7 +85,7 @@ server.listen(PORT, () => {
   console.log(' Ctrl+C pa salir.');
 });
 
-sWS.ServidorWS.lanzarServidorWS(io,juego);
+servidorWS.lanzarServidorWS(io,juego);
 /*app.listen(PORT, () => {
   console.log(`App esta escuchando en el puerto  ${PORT}`);
   console.log(' Ctrl+C pa salir.');

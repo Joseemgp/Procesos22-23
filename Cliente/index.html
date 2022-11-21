@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
-            Juego indefinido
+            Batalla Naval
         </title>
        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -17,52 +17,76 @@
         <script src="./Cliente/clienteRest.js"></script>
         <script src="./Cliente/controlWeb.js"></script>
         <script src="./Cliente/clienteWS.js"></script>
+        <link href="./Cliente/css/style.css"  rel="stylesheet" media="all"/>
     </head>
 
     <body>
-        <div class="container" style="margin-top:30px">
-          <div class="row">
-            <div class="col">
-            <div id="cookie">
-            
-            </div>
-                <div id="agregarUsuario"></div>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-                <div id="crearPartida"></div>
-            </div>
-            <div class="col-8">
-                <div id="listaPartidas"></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="modal" id="miModal">
-            <div class="modal-dialog">
-             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Atención</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body" id="contenidoModal">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
+	<div class="container" style="margin-top:30px">
+		<div class="row">
+			<div class="col">
+				<div id="agregarUsuario"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<div id="crearPartida"></div>
+			</div>
+			<div class="col-8">
+				<div id="listaPartidas"></div>
+			</div>
+		</div>
 
-                </div>
-                 </div>
-        </div>
+		<div class="row">
+			<div class="col-4">
+                <h2>Barcos</h2>
+			<ul class="fleet-roster">
+				<li id="b2">Barco 2</li>
+				<li id="b4">Barco 4</li>
+				<li id="destroyer">Destroyer</li>
+				<li id="battleship">Battleship</li>
+				<li id="carrier">Aircraft Carrier</li>
+			</ul>
+			</div>
+			<div class="col-8">
+				<div class="grid-container">
+					<h2>Tu flota</h2>
+					<div class="grid human-player"></div>
+				</div>
+				<div class="grid-container">
+					<h2>Flota enemiga</h2>
+					<div class="grid computer-player"></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="miModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Atención</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" id="contenidoModal">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					</div>
 
-        <script>
-           
-            rest=new ClienteRest();
-            iu=new ControlWeb();
-            cws=new ClienteWS();
-            iu.comprobarCookie();
-            //iu.mostrarAgregarUsuario();
-        </script>
-    </body>
+				</div>
+			</div>
+		</div>
+		<script>
+			rest = new ClienteRest();
+			iu = new ControlWeb();
+			cws = new ClienteWS();
+			//iu.mostrarAgregarUsuario();
+			iu.comprobarCookie();
+			tablero=new Tablero();
+		</script>
+</body>
 </html>
+
+
+    
+        
+
+   

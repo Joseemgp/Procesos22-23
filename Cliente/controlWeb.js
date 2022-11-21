@@ -1,14 +1,12 @@
 function ControlWeb(){
 
-   
-
-
-    this.comprobarCookie=function(){
+   this.comprobarCookie=function(){
        
         if($.cookie("nick")){
             rest.nick=$.cookie("nick")
-           
-           this.mostrarHome();
+            rest.comprobarUsuario();
+           //cws.conectar();
+           //this.mostrarHome();
         }else{
            
         this.mostrarAgregarUsuario();
@@ -16,6 +14,7 @@ function ControlWeb(){
     }
     
     this.mostrarAgregarUsuario=function(){
+        $('#mAU').remove();
         var cadena= '<div class="row" id="mAU">';//'<form class="form-row needs-validation"  id="mAJ">';
         cadena=cadena+'<div class="row"><h2>El juego indefinido</h2></div>';
         cadena=cadena+'<div class="row">';
@@ -63,7 +62,7 @@ function ControlWeb(){
            /* $('#mLP').remove();
             $("#aviso").remove();
             rest.crearPartida();*/
-            $('mCP').remove();
+            $('#mCP').remove();
             $('#mLP').remove();
             $('#mH').remove();
             $.removeCookie("nick");
@@ -76,7 +75,7 @@ function ControlWeb(){
     }
 
     this.mostrarCrearPartida=function(){
-        $('mCP').remove();
+        $('#mCP').remove();
 //dibujar un boton , que al hacer click llame a crear partida de rest
         let cadena= '<div class="row" id="mCP">';//'<form class="form-row needs-validation"  id="mAJ">';
         cadena=cadena+'<div class="col">'
@@ -125,7 +124,7 @@ function ControlWeb(){
             let cadena="<div class='row' id='mLP'>";
             cadena=cadena+"<div class='col'>";
             cadena=cadena+"<h3>Lista de partidas disponibles</h3>";
-            cadena=cadena+'<button id="btnAL" class="btn btn-primary mb-2 mr-sm-2">Actualizar</button>';
+           
             cadena=cadena+'<ul class="list-group">';
             for(i=0;i<lista.length;i++){
               cadena = cadena+'<li class="list-group-item"><a href="#" value="'+lista[i].codigo+'"> Nick propietario: '+lista[i].owner+'</a></li>';
