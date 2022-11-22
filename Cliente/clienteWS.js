@@ -21,7 +21,7 @@ function ClienteWS(){
        this.colocarBarco=function(nombre,x,y){
             this.socket.emit("colocarBarco",rest.nick, nombre, x,y)
         }
-        this.barcosDesplegados=function(){
+        this.barcosDesplegados=function(){ //let data={"nick":rest.nick,"nombre":nombre,"x":x,"y":y}
             this.socket.emit("barcosDesplegados",rest.nick)
 
         }
@@ -67,6 +67,10 @@ function ClienteWS(){
                     iu.mostrarListaDePartidasDisponibles(lista);
                 }
             });
+            this.socket.on("faseDesplegando",function(data){
+                tablero.flota=data.flota;
+                console.log("ya puedes desplegar la flota");
+            })
 
             /*this.socket.on("esperandoRival",function()){
                     console.log("")
@@ -76,7 +80,14 @@ function ClienteWS(){
                 iu.mostrarModal("A jugaaar!");
             })
 
-            this.soc
+            this.socket.on("barco colocado",function(res){
+                if (res.colocado){
+                    let barco=tablero.flota[res.nombre];
+                    tablero.puedesColocarBarco(barco);
+                }else{
+                    iu.mostrarModal("No se puede colocar barco")
+                }
+            })
 
 
 

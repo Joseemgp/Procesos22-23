@@ -2,6 +2,7 @@ function Tablero() {
 
     this.placingOnGrid=false;
     this.nombreBarco;
+    this.flota;
     this.ini = function () {
         //crear los tableros gráficos
         //inicializar los manejadores 
@@ -44,14 +45,13 @@ function Tablero() {
             var y = parseInt(e.target.getAttribute('data-y'), 10);
             console.log("barco"+self.nombreBarco+"x"+x+"y"+y)
             // Don't screw up the direction if the user tries to place again.
-           var successful = self.colocarBarco(self.nombreBarco,x,y);
-           if (successful) {
+           //var successful = 
+           self.colocarBarco(self.nombreBarco,x,y);
+           //if (successful) {
                 // Done placing this ship
+                //estas dos lineas hay que ejcutarlas en la respuesta del servidor
                //self.endPlacing(Game.placeShipType);
-    
-                
-    
-                self.placingOnGrid = false;
+              //self.placingOnGrid = false;
             /*if (self.areAllShipsPlaced()) {
                     var el = document.getElementById('rotate-button');
                     el.addEventListener(transitionEndEventName(),(function(){
@@ -65,12 +65,67 @@ function Tablero() {
                     el.setAttribute('class', 'invisible');*/
                 }
             
-       }
+       //}
     };
     this.colocarBarco=function(nombre,x,y){
         console.log("barco"+nombre+"x"+x+"y"+y)
-        return true;
+        cws.colocarBarco(nombre,x,y);
+        //return true;
     }
+    this.puedesColocarBarco=function(barco){
+        //obtener el barco
+        //bucle del tamaño del barco que marque las celdas
+        let barco=this.flota[data.nombre];
+        for(i=0;i<barco.tam;i++){
+            this.updateCell(x,y,"ship","human-player");
+        }
+        this.playerOnGrid=false;
+    }
+    this.updateCell = function(x, y, type, targetPlayer) {
+        var player;
+        /*if (targetPlayer === CONST.HUMAN_PLAYER) {
+            player = 'human-player';
+        } else if (targetPlayer === CONST.COMPUTER_PLAYER) {
+            player = 'computer-player';
+        } else {
+            // Should never be called
+            console.log("There was an error trying to find the correct player's grid");
+        }*/
+    
+        /*switch (type) {
+            case CONST.CSS_TYPE_EMPTY:
+                this.cells[x][y] = CONST.TYPE_EMPTY;
+                break;
+            case CONST.CSS_TYPE_SHIP:
+                this.cells[x][y] = CONST.TYPE_SHIP;
+                break;
+            case CONST.CSS_TYPE_MISS:
+                this.cells[x][y] = CONST.TYPE_MISS;
+                break;
+            case CONST.CSS_TYPE_HIT:
+                this.cells[x][y] = CONST.TYPE_HIT;
+                break;
+            case CONST.CSS_TYPE_SUNK:
+                this.cells[x][y] = CONST.TYPE_SUNK;
+                break;
+            default:
+                this.cells[x][y] = CONST.TYPE_EMPTY;
+                break;
+        }*/
+        var classes = ['grid-cell', 'grid-cell-' + x + '-' + y, 'grid-' + type];
+        document.querySelector('.' + player + ' .grid-cell-' + x + '-' + y).setAttribute('class', classes.join(' '));
+    };
+    this.endPlacing = function(shipType) {
+        document.getElementById(shipType).setAttribute('class', 'placed');
+        
+        // Mark the ship as 'used'
+       // Game.usedShips[CONST.AVAILABLE_SHIPS.indexOf(shipType)] = CONST.USED;
+    
+        // Wipe out the variable when you're done with it
+        //Game.placeShipDirection = null;
+        this.nombreBarco = '';
+       // Game.placeShipCoords = [];
+    };
     this.mostrarTablero = function () {
 
     }

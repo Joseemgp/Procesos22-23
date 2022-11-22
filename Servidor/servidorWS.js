@@ -36,8 +36,15 @@ function ServidorWS(){
                 let res = juego.jugadorSeUneAPartida(nick,codigo);		  	
                 cli.enviarAlRemitente(socket,"unidoAPartida",res);		  	
                 let partida=juego.obtenerPartida(codigo);
-                if (partida.esJugando()){
+               /* if (partida.esJugando()){
                     cli.enviarATodosEnPartida(io,codigoStr,"aJugar",{});
+                }*/
+                if(partida.esDesplegando()){
+                    let us=juego.obtenerUsuario(nick);
+                    let flota=us.obtenerFlota();
+                    let res={};
+                    res.flota=flota;
+                    cli.enviarATodosEnPartida(io,codigoStr,"faseDesplegando",res);
                 }
 
           });
@@ -53,7 +60,7 @@ function ServidorWS(){
                 if(us){
                    us.colocarBarco(nombre,x,y);
                     let desplegado = us.obtenerBarcoDesplegado()
-                    let res={ barco:nombre,colocado:desplegado};
+                    let res={ barco:nombre,x:x,y:y,colocado:desplegado};
                     cli.enviarAlRemitente(socket,"barcoColocado",res)
                     
                 }
