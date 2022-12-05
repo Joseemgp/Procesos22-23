@@ -70,6 +70,9 @@ function ClienteWS(){
             this.socket.on("faseDesplegando",function(data){
                 tablero.flota=data.flota;
                 console.log("ya puedes desplegar la flota");
+                //aqui tengo que llamar a las funciones de tablero
+                tablero.elementosGrid();
+                tablero
             })
 
             /*this.socket.on("esperandoRival",function()){
@@ -82,7 +85,8 @@ function ClienteWS(){
 
             this.socket.on("barco colocado",function(res){
                 if (res.colocado){
-                    let barco=tablero.flota[res.nombre];
+                    let barco=tablero.flota[res.barco];
+                    console.log(barco);
                     tablero.puedesColocarBarco(barco);
                 }else{
                     iu.mostrarModal("No se puede colocar barco")

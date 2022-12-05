@@ -1,6 +1,12 @@
-function Juego(){
+let cad=require('./cad.js');
+
+function Juego(test){
+
+
 	this.partidas={};
 	this.usuarios={}; //array asociativo
+	this.cad=new cad.Cad();
+	this.test=test;
 
 	this.agregarUsuario=function(nick){
 		let res={"nick":-1};
@@ -8,16 +14,23 @@ function Juego(){
 			this.usuarios[nick]=new Usuario(nick,this);
 			res={"nick":nick};
 			console.log("Nuevo usuario: "+nick);
+			this.cad.insertarLog({"operacion":"inicio de sesion","propietario":usr.nick,"fecha":Date()},function(){
+				console.log("Registro  de log insertado(inicio de sesion)")
+			})
 		}
 		return res;
 	}
 	this.eliminarUsuario=function(nick){
 		delete this.usuarios[nick];
+		
 	}
 	this.usuarioSale=function(nick){
 		if (this.usuarios[nick]){
 			this.finalizarPartida(nick);
 			this.eliminarUsuario(nick);
+			this.insertarLog({"operacion":"eliminarUsuario","propietario":usr.nick,"fecha":Date()},function(){
+				console.log("Registro  de log insertado(eliminarUsuario)")
+			})
 		}
 	}
 	this.jugadorCreaPartida=function(nick){
@@ -48,6 +61,9 @@ function Juego(){
 	this.crearPartida=function(usr){
 		let codigo=Date.now();
 		console.log("Usuario "+usr.nick+ " crea partida "+codigo);
+		this.insertarLog({"operacion":"crearPartida","propietario":usr.nick,"fecha":Date()},function(){
+			console.log("Registro de log insertado")
+	});
 		this.partidas[codigo]=new Partida(codigo,usr); 
 		return codigo;
 	}
@@ -55,6 +71,10 @@ function Juego(){
 		let res=-1;
 		if (this.partidas[codigo]){
 			res=this.partidas[codigo].agregarJugador(usr);
+			//insertar log
+			this.cad.insertarLog({"operacion":"unirseAPartida","propietario":usr.nick,"fecha":Date()},function(){
+				console.log("Registro  de log insertado(unirse)")
+			})
 		}
 		else{
 			console.log("La partida no existe");
@@ -81,12 +101,37 @@ function Juego(){
 		for (let key in this.partidas){
 			if (this.partidas[key].fase=="inicial" && this.partidas[key].estoy(nick)){
 				this.partidas[key].fase="final";
+				this.cad.insertarLog({"operacion":"finalizarPartida","propietario":usr.nick,"fecha":Date()},function(){
+					console.log("Registro  de log insertado(finalizarPartida)")
+				})
 			}
 		}
 	}
 	this.obtenerPartida=function(codigo){
 		return this.partidas[codigo];
 	}
+	this.abandonarPartida = function (nick, codigo) {
+		this.cad.insertarLog({ "operacion": "abandonarPartida", "propietario": nick, "fecha": Date() }, function () {
+			console.log("Registro de log insertado");
+		});
+		return this.eliminarPartida(codigo);
+	}
+	this.insertarLog=function(log,callback){
+		if(!test){
+			this.cad.insertarLog(log,callback);
+		}
+	}
+
+	this.obtenerLogs=function(callback){
+			this.cad.obtenerLogs(callback);
+
+	}
+	if(!test){
+		this.cad.conectar(function(db){
+			console.log("conectado a Atlas")
+		})
+	}
+	//this.cad.conectar();
 }
 
 function Usuario(nick,juego){
@@ -175,6 +220,12 @@ function Partida(codigo,usr){
 		if (this.hayHueco()){
 			this.jugadores.push(usr);
 			console.log("El usuario "+usr.nick+" se une a la partida "+this.codigo);
+			
+		this.cad.insertarLog({ "operacion": "abandonarPartida", "propietario": nick, "fecha": Date() }, function () {
+			console.log("Registro de log insertado");
+		});
+		
+	
 			usr.partida=this;
 			usr.inicializarTableros(5);
 			usr.inicializarFlota();

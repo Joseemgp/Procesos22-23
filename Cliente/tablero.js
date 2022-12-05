@@ -3,6 +3,10 @@ function Tablero() {
     this.placingOnGrid=false;
     this.nombreBarco;
     this.flota;
+    this.terminarDeColocarBarco=function(barco,x,y){
+        for(i)
+    }
+    
     this.ini = function () {
         //crear los tableros gráficos
         //inicializar los manejadores 
@@ -144,8 +148,12 @@ function Tablero() {
                     gridDiv[grid].appendChild(el);
                 }
             }
-        }        
+        }   
+        this.ini();     
     };
+    this.elementosGrid=function(){
+
+    }
     this.crearGrid();
     this.ini();
     //colocar en el index.html los div class grid
