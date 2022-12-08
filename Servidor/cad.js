@@ -7,8 +7,8 @@ function Cad(){
         this.logs;
 
         //logs
-        function insertarLog(log,callback){
-            insertar(this.logs,log,callback);
+        this.insertarLog=function(registroLog,callback){
+            insertar(this.logs,registroLog,callback);
         }
 
         this.obtenerLogs=function(callback){

@@ -79,10 +79,15 @@ describe("El juego...", function() {
 
     it("Comprobar jugada que Pepe gana",function(){
       expect(partida.turno.nick).toEqual("pepe");
+      expect(us2.tableroPropio.casillas[0][0].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][0].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[2][0].contiene.estado).toEqual("agua");
       expect(us2.flota["b2"].estado).toEqual("intacto");
       us1.disparar(0,0);
       expect(us2.flota["b2"].estado).toEqual("tocado");
+      expect(partida.turno.nick).toEqual("pepe");
       us1.disparar(1,0);
+      
       expect(us2.flota["b2"].estado).toEqual("hundido");
       expect(us2.flota["b4"].estado).toEqual("intacto");
       us1.disparar(0,1);
