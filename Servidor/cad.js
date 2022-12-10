@@ -13,7 +13,7 @@ function Cad(){
 
         this.obtenerLogs=function(callback){
             obtenerTodos(this.logs,callback);
-        }
+        } 
     
 
         //partidas
