@@ -5,7 +5,7 @@ var ObjectID=require("mongodb").ObjectID;
  
 function Cad(){
         this.logs;
-
+ 
         //logs
         this.insertarLog=function(registroLog,callback){
             insertar(this.logs,registroLog,callback);
