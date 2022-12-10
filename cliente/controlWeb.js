@@ -16,7 +16,7 @@ function ControlWeb(){
     this.mostrarAgregarUsuario=function(){
         $('#mAU').remove();
         var cadena= '<div class="row" id="mAU">';//'<form class="form-row needs-validation"  id="mAJ">';
-        cadena=cadena+'<div class="row"><h2>El juego indefinido</h2></div>';
+        cadena=cadena+'<div class="row"><h2>Batalla Naval</h2></div>';
         cadena=cadena+'<div class="row">';
         cadena=cadena+'<div class="col">'
         cadena=cadena+'<input type="text" class="form-control mb-2 mr-sm-2" id="usr" placeholder="Introduce tu nick (max 6 letras)" required></div>';
