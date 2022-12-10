@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "^4.18.1",
     "socket.io": "^4.5.3",
-    "jasmine-node": "3n.0.0",
+    "jasmine-node": "3.0.0",
     "mongodb":"^3.6.3"
   },
   "name": "procesos22-23",
