@@ -75,7 +75,7 @@ function Tablero(size){
 			this.updateCell(x+i,y,"ship",'human-player');
 		}
 		self.endPlacing(barco.nombre);
-	}
+	 } 
 	this.shootListener=function(e){
 		var x = parseInt(e.target.getAttribute('data-x'), 10);
 		var y = parseInt(e.target.getAttribute('data-y'), 10);
