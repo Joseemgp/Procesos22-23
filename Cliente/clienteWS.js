@@ -65,7 +65,7 @@ function ClienteWS(){
 			tablero.flota=data.flota;
 			tablero.elementosGrid();
 			tablero.mostrarFlota();//data.flota);
-			iu.quitarER();
+			//iu.quitarER();
 			console.log("Ya puedes desplegar la flota");
 		})
 		this.socket.on("aJugar",function(){
