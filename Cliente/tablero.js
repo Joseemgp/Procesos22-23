@@ -81,7 +81,7 @@ function Tablero(size){
 		var y = parseInt(e.target.getAttribute('data-y'), 10);
 		console.log("disparo x: "+x+" y: "+y);
 		cws.disparar(x,y);
-	}
+	 }
 	this.updateCell = function(x, y, type,target) {
 		var player=target;//'human-player';
 		var classes = ['grid-cell', 'grid-cell-' + x + '-' + y, 'grid-' + type];
