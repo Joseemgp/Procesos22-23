@@ -9,8 +9,8 @@ const server=http.createServer(app)
 const { Server }=require("socket.io");
 const io =new Server(server);
 
-const modelo = require("./Servidor/modelo.js");
-const sWS=require("./Servidor/servidorWS.js")
+const modelo = require("./servidor/modelo.js");
+const sWS=require("./servidor/servidorWS.js")
 
 const PORT = process.env.PORT || 5000;
 var args = process.argv.slice(2);
@@ -30,7 +30,7 @@ let servidorWS=new sWS.ServidorWS();
 
 app.use(express.static(__dirname + "/"));
 app.get("/", function(request,response){
-  var contenido=fs.readFileSync(__dirname+"/Cliente/index.html");
+  var contenido=fs.readFileSync(__dirname+"/cliente/index.html");
   response.setHeader("Content-type","text/html");
   response.send(contenido);
 });
