@@ -1,18 +1,21 @@
 {
-  "dependencies": {
-    "express": "^4.18.1",
-    "socket.io": "^4.5.3",
-    "jasmine-node": "3.0.0",
-    "mongodb":"^3.6.3"
-  },
   "name": "procesos22-23",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "dependencies": {
+    "cookie-session": "^2.0.0",
+    "express": "^4.18.1",
+    "jasmine-node": "3.0.0",
+    "mongodb": "^3.6.3",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0",
+    "socket.io": "4.5.3"
+  },
   "scripts": {
     "start": "node index.js false",
     "test": "node_modules\\.bin\\jasmine-node servidor"
-  }, 
-
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Joseemgp/Procesos22-23.git"
@@ -22,6 +25,5 @@
   "bugs": {
     "url": "https://github.com/Joseemgp/Procesos22-23/issues"
   },
-  "homepage": "https://github.com/Joseemgp/Procesos22-23#readme",
-  "description": ""
+  "homepage": "https://github.com/Joseemgp/Procesos22-23#readme"
 }
