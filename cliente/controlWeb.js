@@ -146,9 +146,12 @@ function ControlWeb(){
                 rest.obtenerListaPartidasDisponibles();
             })	
         }
-        this.mostrarModal=function(msg){
+        this.mostrarModal=function(titulo,msg){
             $('#mM').remove();
-            var cadena="<p id='mM'>"+msg+"</p>";
+            $('#cT').remove();
+            var cadena2="<div id='cT'>"+titulo+"</div>";
+             cadena="<p id='mM'>"+msg+"</p>";
+             $('#titulo').append(cadena2);
             $('#contenidoModal').append(cadena);
             $('#miModal').modal("show");
         }

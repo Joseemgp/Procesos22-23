@@ -205,7 +205,7 @@ function Usuario(nick,juego){
 	}
 	this.flotaHundida=function(){
 		for(var key in this.flota){
-			if (!this.flota[key].estado!="hundido"){
+			if (this.flota[key].estado!="hundido"){
 				return false;
 			}
 		}
@@ -267,7 +267,7 @@ function Partida(codigo,usr){
 		return this.fase=="desplegando";
 	}
 	this.esFinal=function(){
-		return this.fase=="Final";
+		return this.fase=="final";
 	}
 	
 	this.flotasDesplegadas=function(){
@@ -325,7 +325,7 @@ function Partida(codigo,usr){
 		if (jugador.flotaHundida()){
 			this.fase="final";
 			console.log("Fin de la partida");
-			console.log("Gandor: "+this.turno.nick);
+			console.log("Ganador: "+this.turno.nick);
 		}
 	}
 	this.agregarJugador(this.owner);
@@ -344,12 +344,13 @@ function Tablero(size){
 		}
 	}
 	this.colocarBarco=function(barco,x,y){
-		if (this.casillasLibres(x,y,barco.tam)){
-			for(i=x;i<barco.tam;i++){
-				this.casillas[i][y].contiene=barco;
-			}
-			barco.desplegado=true;
-		}
+		// if (this.casillasLibres(x,y,barco.tam)){
+		// 	for(i=x;i<barco.tam;i++){
+		// 		this.casillas[i][y].contiene=barco;
+		// 	}
+		// 	barco.desplegado=true;
+		// }
+		barco.colocar(this,x,y);
 	}
 	this.casillasLibres=function(x,y,tam){
 		for(i=x;i<tam;i++){
@@ -385,29 +386,76 @@ function Casilla(x,y){
 function Barco(nombre,tam){ //"b2" barco tamaño 2
 	this.nombre=nombre;
 	this.tam=tam;
-	this.orientacion; //horizontal, vertical...
+	this.orientacion= new Horizontal(); //horizontal, vertical...
 	this.desplegado=false;
 	this.estado="intacto";
 	this.disparos=0;
+	this.casillas = {}; //en vez de []
 	this.esAgua=function(){
 		return false;
 	}
-	this.meDisparan=function(tablero,x,y){
-		this.disparos++;
-		if (this.disparos<this.tam){
-			this.estado="tocado";
-			console.log("Tocado");
-		}
-		else{
-			this.estado="hundido";
-			console.log("Hundido!!!");
-		}
-		tablero.ponerAgua(x,y);
-		return this.estado
+	this.meDisparan = function (tablero, x, y) {
+        //this.disparos++;
+        //if (this.casillas[x] == 'intacto') { //Cambiado, puede no ser necesario este if
+            this.estado = "tocado";
+            this.casillas[x] = 'tocado'
+			console.log("Tocado")
+        //}
+        if (this.comprobarCasillas()) {
+            this.estado = "hundido";
+			console.log("Hundido")
+        }
+        //tablero.ponerAgua(x, y);
+        return this.estado;
+    }
+	this.posicion = function (x, y) {
+        this.x = x;
+        this.y = y;
+        this.desplegado = true;
+		this.iniCasillas()
+		//console.log(this)
+    }
+	this.colocar = function(tablero,x,y){
+		//console.log(this,tablero,x,y)
+		this.orientacion.colocarBarco(this,tablero,x,y);
 	}
+	this.comprobarCasillas = function () { //Esto puede dejar de funcionar si tenemos formas raras de los barcos
+        for (i = 0; i < this.tam; i++) {
+            if (this.casillas[this.x + i] == 'intacto') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+	this.iniCasillas = function () { //Ha cambiado todo esto al ser un array asociativo
+        for (i = 0; i < this.tam; i++) {
+            this.casillas[i+this.x] = "intacto"; //cambiado
+        }
+    }
 	this.obtenerEstado=function(){
 		return this.estado;
 	}
+}
+
+function Horizontal() {
+	this.nombre="horizontal"
+	this.colocarBarco=function(barco,tablero,x,y){
+        if (tablero.casillasLibres(x,y,barco.tam)){
+            for(i=0;i<barco.tam;i++){
+                tablero.casillas[i+x][y].contiene=barco;
+            }
+            barco.posicion(x,y);
+            //barco.desplegado=true;
+        }
+    }
+	this.esHorizontal = function(){
+		return true;
+	}
+	this.esVertical = function(){
+		return false;
+	}
+
 }
 
 function Agua(){
