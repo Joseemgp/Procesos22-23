@@ -214,6 +214,15 @@ function Usuario(nick,juego){
 	this.obtenerBarcoDesplegado=function(nombre){
 		return this.flota[nombre].desplegado
 	}
+
+	this.logAbandonarPartida = function(jugador,codigo){
+
+        this.juego.insertarLog({"operacion":"abandonarPartida","usuario":jugador.nick,"codigo":codigo,"fecha":Date()},function(){
+
+            console.log("Registro de log(abandonar) insertado");
+
+        });
+}
 }
 
 function Partida(codigo,usr){
@@ -234,7 +243,7 @@ function Partida(codigo,usr){
 		
 	
 			usr.partida=this;
-			usr.inicializarTableros(5);
+			usr.inicializarTableros(10);
 			usr.inicializarFlota();
 			this.comprobarFase();
 		}
@@ -329,7 +338,37 @@ function Partida(codigo,usr){
 		}
 	}
 	this.agregarJugador(this.owner);
+	this.abandonarPartida = function (jugador) {
+
+        if (jugador) {
+
+
+
+            rival = this.obtenerRival(jugador.nick)
+
+            this.fase = "final";
+
+            console.log("Fin de la partida");
+
+            console.log("Ha abandonado el jugador " + jugador.nick);
+
+            if(rival){
+
+            console.log("Ganador: " + rival.nick);
+
+            }
+
+            jugador.logAbandonarPartida(jugador,this.codigo);
+
+
+
+
+        }
+
+    }
 }
+
+
 
 function Tablero(size){
 	this.size=size; //filas=columnas=size
@@ -441,6 +480,7 @@ function Barco(nombre,tam){ //"b2" barco tamaño 2
 function Horizontal() {
 	this.nombre="horizontal"
 	this.colocarBarco=function(barco,tablero,x,y){
+		console.log(barco,tablero,x,y)
         if (tablero.casillasLibres(x,y,barco.tam)){
             for(i=0;i<barco.tam;i++){
                 tablero.casillas[i+x][y].contiene=barco;

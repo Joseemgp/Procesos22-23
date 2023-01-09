@@ -68,14 +68,16 @@ function ClienteWS(){
 			//iu.quitarER();
 			console.log("Ya puedes desplegar la flota");
 		})
-		this.socket.on("aJugar",function(){
+		this.socket.on("aJugar",function(res){
 			iu.mostrarModal("Batalla Naval","A jugar!");			
 			//tablero.mostrar(true);
+			iu.mostrarModal("Turno","Turno de "+res.turno);
 		});
 		this.socket.on("jugadorAbandona",function(data){
 			iu.mostrarModal("Aviso","Jugador "+data.nick+" abandona");
 			iu.finPartida();
 		});
+		
 		this.socket.on("barcoColocado",function(res){
 			console.log("Barco "+res.barco+" colocado?: "+res.colocado);
 			let barco=tablero.flota[res.barco];
@@ -91,13 +93,19 @@ function ClienteWS(){
 			if (res.fase=="jugando"){
 				console.log("A jugar, le toca a: "+res.turno);
 			}
+			
 		});
 		this.socket.on("esperandoRival",function(){
 			console.log("Esperando rival");
 		})
 		this.socket.on("disparo",function(res){
 			console.log(res.impacto);
+			if(res.impacto=="agua"){
+				iu.mostrarModal("Turno","Turno de "+res.turno);
+			}
+
 			console.log("Turno: "+res.turno);
+			//iu.mostrarModal("Turno","Turno de "+res.turno);
 			console.log("Atacante: "+res.atacante);
 			if (res.atacante==rest.nick){
 				tablero.updateCell(res.x,res.y,res.impacto,'computer-player');
@@ -115,5 +123,30 @@ function ClienteWS(){
 			iu.mostrarModal("Batalla Naval","Fin de la partida. Ganador: "+res.turno);
 			iu.finPartida();
 		});
+		this.socket.on("partidaAbandonada", function (res) {
+
+            if (res.codigoP != -1) {
+
+                console.log(res.nombre + " ha abandonado la partida con codigo: " + res.codigoP  + " Ha ganado " + res.nombreR)
+				//console.log(data)
+                
+
+                iu.mostrarModal("Batalla Naval", res.nombre+" ha abandonado la partida , Ha ganado " + res.nombreR);
+				iu.mostrarHome();
+            }
+
+            
+
+        });
+
+
+
+        this.socket.on("partidaCancelada", function (res) {
+
+            iu.mostrarModal("Batalla Naval","Has terminado la partida " + res.codigoP + " antes de que se uniese alguien")
+
+            iu.mostrarHome()
+
+        });
 	}
 }

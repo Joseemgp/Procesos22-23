@@ -31,12 +31,12 @@ describe("El juego...", function() {
     expect(us1.tableroRival).toBeDefined();
     expect(us2.tableroRival).toBeDefined();
 
-    expect(us1.tableroPropio.casillas.length).toEqual(5);
-    expect(us2.tableroPropio.casillas.length).toEqual(5);
+    expect(us1.tableroPropio.casillas.length).toEqual(10);
+    expect(us2.tableroPropio.casillas.length).toEqual(10);
 
     //habría que recorrer las 5 columnas
     for(x=0;x<5;x++){
-      expect(us1.tableroPropio.casillas[x].length).toEqual(5);
+      expect(us1.tableroPropio.casillas[x].length).toEqual(10);
     }
   //  expect(us2.tableroPropio.casillas[0].length).toEqual(5);
     

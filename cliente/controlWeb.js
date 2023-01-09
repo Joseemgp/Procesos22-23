@@ -1,4 +1,7 @@
 function ControlWeb(){
+//pon el fondo de color azul claro
+    $('body').css('background-color','#e6f2ff');
+  
 
    this.comprobarCookie=function(){
        
@@ -17,6 +20,8 @@ function ControlWeb(){
         $('#mAU').remove();
         var cadena= '<div class="row" id="mAU">';//'<form class="form-row needs-validation"  id="mAJ">';
         cadena=cadena+'<div class="row"><h2>Batalla Naval</h2></div>';
+     
+       // cadena=cadena+'<div class="row"><div class="col"></div></div>';
         cadena=cadena+'<div class="row">';
         cadena=cadena+'<div class="col">'
         cadena=cadena+'<input type="text" class="form-control mb-2 mr-sm-2" id="usr" placeholder="Introduce tu nick (max 6 letras)" required></div>';
@@ -26,8 +31,9 @@ function ControlWeb(){
         cadena=cadena+'</div></div>'; //' </form>';
         cadena=cadena+'<div id="nota"></div></div>';
 
+        cadena=cadena +  '<div class="row"><h2> Este proyecto se basa en el Proyecto de la Asignatura de Ingeniería del Software creado por Jose Antonio Gallud Lázaro</h2></div>'
         $("#agregarUsuario").append(cadena);     
-        //$("#nota").append("<div id='aviso' style='text-align:right'>Inicia sesión con Google para jugar</div>");    
+          
 
         $("#btnAU").on("click",function(e){
             if ($('#usr').val() === '' || $('#usr').val().length>6) {
@@ -42,14 +48,24 @@ function ControlWeb(){
                 
             }
         })
+
+        
     }
     this.mostrarHome=function(){
         $('#mH').remove();
+        $('#gc').remove();
         let cadena= '<div clas="row" id="mH">';//'<form class="form-row needs-validation"  id="mAJ">';
         cadena=cadena+'<div class="col">'
+       
+        cadena=cadena+'<div class="row" style="background-color:#e6ffe6">';
         cadena=cadena+"<p>Bienvenido "+rest.nick+"</p>";
         cadena=cadena+'<button id="btnS" class="btn btn-primary mb-2 mr-sm-2">Salir</button>'
+     
+
         
+    
+
+        cadena=cadena+'</div></div>'
         cadena=cadena+"<div id='codigo'></div>"
         cadena=cadena+'</div></div>'
         $('#agregarUsuario').append(cadena);
@@ -65,14 +81,16 @@ function ControlWeb(){
             $('#mCP').remove();
             $('#mLP').remove();
             $('#mH').remove();
+            
             $.removeCookie("nick");
             iu.comprobarCookie();
             rest.usuarioSale();
-           
+            $('#gc').remove();
             
         });
+
         
-    }
+}
 
     this.mostrarCrearPartida=function(){
         $('#mCP').remove();
@@ -102,6 +120,7 @@ function ControlWeb(){
     this.mostrarCodigo=function(codigo){
         let cadena="Codigo de la partida: " + codigo;
         $('#codigo').append(codigo);
+        iu.mostrarAbandonarPartida();
     }
     
         //crear un control visual tipo lista para mostrar la lista de partida y permitir unirse con un click a la partida seleccionada
@@ -154,6 +173,34 @@ function ControlWeb(){
              $('#titulo').append(cadena2);
             $('#contenidoModal').append(cadena);
             $('#miModal').modal("show");
+        }
+        this.finPartida = function(){
+
+            $('#mH').remove()
+    
+            cws.codigo = undefined;
+    
+            $('#gc').remove();
+    
+            tablero = new Tablero(10);
+    
+            this.mostrarHome()
+    
+        }
+
+        this.mostrarAbandonarPartida = function(){
+             $('#mAbP').remove();
+    let cadena = '<div class="row" id="mAbP">';
+    cadena = cadena + '<div style="margin-top:15px" class="col">'
+    cadena = cadena + '<button id="btnAbP" class="btn btn-primary mb-2 mr-sm-2">Abandonar Partida</button>';
+    cadena = cadena + '</div>'
+    cadena = cadena + '</div>'
+     $('#codigo').append(cadena);
+    $("#btnAbP").on("click", function (e) {
+    cws.abandonarPartida();
+
+            })
+    
         }
 
 
