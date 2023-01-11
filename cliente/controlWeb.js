@@ -16,27 +16,38 @@ function ControlWeb(){
         }
     }
     
+    //
     this.mostrarAgregarUsuario=function(){
         $('#mAU').remove();
         $('#mInf').remove();
-        var cadena= '<div class="row" id="mAU">';//'<form class="form-row needs-validation"  id="mAJ">';
-        //Muestra el titulo de Batalla Naval arriba en el centro de la Página
-
-        cadena=cadena+'<div class="row"><h2>Batalla Naval </h2></div>';
-     
-       
-        cadena=cadena+'<div class="row">';
-        cadena=cadena+'<div class="col">'
-        
-        cadena=cadena+'<div class="col"></div>';
-        cadena=cadena+'<input type="text" class="form-control mb-2 mr-sm-2" id="usr" placeholder="Introduce tu nick (max 6 letras)" required></div>';
-        cadena=cadena+'<div class="col">';
-        cadena=cadena+'<button id="btnAU" class="btn btn-primary mb-2 mr-sm-2">Iniciar sesión</button>';
-        cadena=cadena+'<a href="/auth/google" class="btn btn-primary mb-2 mr-sm-2">Accede con Google</a>';
-        cadena=cadena+'</div></div>'; //' </form>';
-        cadena=cadena+'<div id="nota"></div></div>';
-        cadena=cadena +  '<div class="row"><h7>Este proyecto se basa en el Proyecto de la Asignatura de Ingeniería del Software creado por Jose Antonio Gallud Lázaro</h7></div>'
-
+        var cadena = "";
+        cadena += '<div class="container" id="mAU">';
+        cadena += ' <div class="row justify-content-center">';
+        cadena += ' <h2>Batalla Naval</h2>';
+        cadena += ' </div>';
+        cadena += ' <div class="row">';
+        cadena += ' <div class="col-4 mx-auto">';
+        cadena += ' <div class="form-group">';
+        cadena += ' <label for="usr">Nickname:</label>';
+        cadena += ' <input type="text" class="form-control" id="usr" placeholder="Introduce tu nick (max 6 letras)" required>';
+        cadena += ' </div>';
+        cadena += ' <div class="form-group">';
+        cadena += ' <button id="btnAU" class="btn btn-primary mb-2">Iniciar sesión</button>';
+        cadena += ' <a href="/auth/google" class="btn btn-danger mb-2">Accede con Google</a>';
+        cadena += ' </div>';
+        cadena += ' </div>';
+        cadena += ' </div>';
+        cadena += ' <div class="row">';
+        cadena += ' <div class="col-4 mx-auto">';
+        cadena += ' <div class="alert alert-danger" id="nota" style="display:none"></div>';
+        cadena += ' </div>';
+        cadena += ' </div>';
+        cadena += '</div>';
+        cadena += '<div class="row">';
+        cadena += ' <div class="col-12 text-center">';
+        cadena +=  '<div class="row"><h7>Este proyecto se basa en el Proyecto de la Asignatura de Ingeniería del Software creado por Jose Antonio Gallud Lázaro</h7></div>';
+        cadena += ' </div>';
+        cadena += '</div>';
         $("#agregarUsuario").append(cadena);     
           
 
@@ -59,20 +70,19 @@ function ControlWeb(){
     this.mostrarHome=function(){
         $('#mH').remove();
         $('#gc').remove();
-        let cadena= '<div clas="row" id="mH">';//'<form class="form-row needs-validation"  id="mAJ">';
-        cadena=cadena+'<div class="col">'
-       
-        cadena=cadena+'<div class="row" style="background-color:#e6ffe6">';
-        cadena=cadena+"<p>Bienvenido "+rest.nick+"</p>";
-        cadena=cadena+'<button id="btnS" class="btn btn-primary mb-2 mr-sm-2">Salir</button>'
-     
-
-        
-    
-
-        cadena=cadena+'</div></div>'
-        cadena=cadena+"<div id='codigo'></div>"
-        cadena=cadena+'</div></div>'
+        let cadena = '<div class="row" id="mH">';
+        cadena = cadena + '<div class="col">';
+        cadena = cadena + '<div class="card">';
+        cadena = cadena + '<div class="card-header">';
+        cadena = cadena + 'Bienvenido ' + rest.nick;
+        cadena = cadena + '</div>';
+        cadena = cadena + '<div class="card-body">';
+        cadena = cadena + '<button id="btnS" class="btn btn-danger">Salir</button>';
+        cadena = cadena + '<div id="codigo"></div>';
+        cadena = cadena + '</div>';
+        cadena = cadena + '</div>';
+        cadena = cadena + '</div>';
+        cadena = cadena + '</div>';
         $('#agregarUsuario').append(cadena);
         this.mostrarCrearPartida();
         rest.obtenerListaPartidasDisponibles();
