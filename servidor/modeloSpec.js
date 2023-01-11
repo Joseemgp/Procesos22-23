@@ -44,15 +44,22 @@ describe("El juego...", function() {
     expect(us1.tableroPropio.casillas[0][0].contiene.esAgua()).toEqual(true);
   });
 
-  it("los dos jugadores tienen flota (2 barcos, tam 2 y 4)",function(){
+  it("los dos jugadores tienen flota (4 barcos, tam 1,2,3 y 4)",function(){
     expect(us1.flota).toBeDefined();
     expect(us2.flota).toBeDefined();
     
-    expect(Object.keys(us1.flota).length).toEqual(2);
-    expect(Object.keys(us2.flota).length).toEqual(2);
+    expect(Object.keys(us1.flota).length).toEqual(4);
+    expect(Object.keys(us2.flota).length).toEqual(4);
     
-    expect(us1.flota["b2"].tam).toEqual(2);
-    expect(us1.flota["b4"].tam).toEqual(4);
+    expect(us1.flota["Velero"].tam).toEqual(2);
+    expect(us1.flota["PortaAviones"].tam).toEqual(4);
+    expect(us1.flota["Crucero"].tam).toEqual(3);
+    expect(us1.flota["Canoa"].tam).toEqual(1);
+
+    expect(us2.flota["Velero"].tam).toEqual(2);
+    expect(us2.flota["PortaAviones"].tam).toEqual(4);
+    expect(us2.flota["Crucero"].tam).toEqual(3);
+    expect(us2.flota["Canoa"].tam).toEqual(1);
   });
 
   it("la partida está en fase desplegando",function(){
@@ -62,11 +69,15 @@ describe("El juego...", function() {
 
   describe("A jugar!",function(){
     beforeEach(function(){
-      us1.colocarBarco("b2",0,0); // 0,0 1,0
-      us1.colocarBarco("b4",0,1); // 0,1 1,1 2,1 3,1
+      us1.colocarBarco("Velero",0,0); // 0,0 1,0
+      us1.colocarBarco("PortaAviones",0,1);// 0,1 1,1 2,1 3,1
+      us1.colocarBarco("Crucero",0,2); 
+      us1.colocarBarco("Canoa",0,3); 
       us1.barcosDesplegados();
-      us2.colocarBarco("b2",0,0);
-      us2.colocarBarco("b4",0,1);
+      us2.colocarBarco("Velero",0,0); // 0,0 1,0
+      us2.colocarBarco("PortaAviones",0,1);// 0,1 1,1 2,1 3,1
+      us2.colocarBarco("Crucero",0,2); 
+      us2.colocarBarco("Canoa",0,3); 
       us2.barcosDesplegados();
     });
 
@@ -79,28 +90,119 @@ describe("El juego...", function() {
 
     it("Comprobar jugada que Pepe gana",function(){
       expect(partida.turno.nick).toEqual("pepe");
+      //Velero
       expect(us2.tableroPropio.casillas[0][0].contiene.estado).toEqual("intacto");
       expect(us2.tableroPropio.casillas[1][0].contiene.estado).toEqual("intacto");
+      //PortaAviones
+
+      expect(us2.tableroPropio.casillas[0][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[2][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[3][1].contiene.estado).toEqual("intacto");
+
+      //Crucero
+      expect(us2.tableroPropio.casillas[0][2].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][2].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[2][2].contiene.estado).toEqual("intacto");
+
+      //Canoa
+      expect(us2.tableroPropio.casillas[0][3].contiene.estado).toEqual("intacto");
+
+
       expect(us2.tableroPropio.casillas[2][0].contiene.estado).toEqual("agua");
-      expect(us2.flota["b2"].estado).toEqual("intacto");
+
+
+      expect(us2.flota["Velero"].estado).toEqual("intacto");
       us1.disparar(0,0);
-      expect(us2.flota["b2"].estado).toEqual("tocado");
+      expect(us2.flota["Velero"].estado).toEqual("tocado");
       expect(partida.turno.nick).toEqual("pepe");
       us1.disparar(1,0);
-      
-      expect(us2.flota["b2"].estado).toEqual("hundido");
-      expect(us2.flota["b4"].estado).toEqual("intacto");
+      expect(us2.flota["Velero"].estado).toEqual("hundido");
+
+      expect(us2.flota["PortaAviones"].estado).toEqual("intacto");
       us1.disparar(0,1);
-      expect(us2.flota["b4"].estado).toEqual("tocado");
+      expect(us2.flota["PortaAviones"].estado).toEqual("tocado");
       us1.disparar(1,1);
-      expect(us2.flota["b4"].estado).toEqual("tocado");
+      expect(us2.flota["PortaAviones"].estado).toEqual("tocado");
       us1.disparar(2,1);
-      expect(us2.flota["b4"].estado).toEqual("tocado");
+      expect(us2.flota["PortaAviones"].estado).toEqual("tocado");
       us1.disparar(3,1);
-      expect(us2.flota["b4"].estado).toEqual("hundido");
+      expect(us2.flota["PortaAviones"].estado).toEqual("hundido");
+
+      expect(us2.flota["Crucero"].estado).toEqual("intacto");
+      us1.disparar(0,2);
+      expect(us2.flota["Crucero"].estado).toEqual("tocado");
+      us1.disparar(1,2);
+      expect(us2.flota["Crucero"].estado).toEqual("tocado");
+      us1.disparar(2,2);
+      expect(us2.flota["Crucero"].estado).toEqual("hundido");
+
+      expect(us2.flota["Canoa"].estado).toEqual("intacto");
+      us1.disparar(0,3);
+      expect(us2.flota["Canoa"].estado).toEqual("hundido");
+
       expect(partida.esFinal()).toEqual(true);
       expect(us2.flotaHundida()).toEqual(true);
       expect(us1.flotaHundida()).toEqual(false);
+    });
+
+    it("Comprobar jugada que Luis gana",function(){
+      us1.disparar(3,0);
+      expect(partida.turno.nick).toEqual("luis");
+      //Velero
+      expect(us2.tableroPropio.casillas[0][0].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][0].contiene.estado).toEqual("intacto");
+      //PortaAviones
+
+      expect(us2.tableroPropio.casillas[0][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[2][1].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[3][1].contiene.estado).toEqual("intacto");
+
+      //Crucero
+      expect(us2.tableroPropio.casillas[0][2].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[1][2].contiene.estado).toEqual("intacto");
+      expect(us2.tableroPropio.casillas[2][2].contiene.estado).toEqual("intacto");
+
+      //Canoa
+      expect(us2.tableroPropio.casillas[0][3].contiene.estado).toEqual("intacto");
+
+
+      expect(us2.tableroPropio.casillas[2][0].contiene.estado).toEqual("agua");
+
+      
+      expect(us1.flota["Velero"].estado).toEqual("intacto");
+      us2.disparar(0,0);
+      expect(us1.flota["Velero"].estado).toEqual("tocado");
+      expect(partida.turno.nick).toEqual("luis");
+      us2.disparar(1,0);
+      expect(us1.flota["Velero"].estado).toEqual("hundido");
+
+      expect(us1.flota["PortaAviones"].estado).toEqual("intacto");
+      us2.disparar(0,1);
+      expect(us1.flota["PortaAviones"].estado).toEqual("tocado");
+      us2.disparar(1,1);
+      expect(us1.flota["PortaAviones"].estado).toEqual("tocado");
+      us2.disparar(2,1);
+      expect(us1.flota["PortaAviones"].estado).toEqual("tocado");
+      us2.disparar(3,1);
+      expect(us1.flota["PortaAviones"].estado).toEqual("hundido");
+
+      expect(us1.flota["Crucero"].estado).toEqual("intacto");
+      us2.disparar(0,2);
+      expect(us1.flota["Crucero"].estado).toEqual("tocado");
+      us2.disparar(1,2);
+      expect(us1.flota["Crucero"].estado).toEqual("tocado");
+      us2.disparar(2,2);
+      expect(us1.flota["Crucero"].estado).toEqual("hundido");
+
+      expect(us1.flota["Canoa"].estado).toEqual("intacto");
+      us2.disparar(0,3);
+      expect(us1.flota["Canoa"].estado).toEqual("hundido");
+
+      expect(partida.esFinal()).toEqual(true);
+      expect(us1.flotaHundida()).toEqual(true);
+      expect(us2.flotaHundida()).toEqual(false);
     });
 
     it("Comprobar el cambio de turno",function(){
@@ -110,7 +212,7 @@ describe("El juego...", function() {
 
     it("Comprobar que no deja disparar sin turno",function(){
       us2.disparar(0,0);
-      expect(us1.flota["b2"].estado).toEqual("intacto");
+      expect(us1.flota["Velero"].estado).toEqual("intacto");
     });
   });
 });

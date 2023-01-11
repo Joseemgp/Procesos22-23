@@ -69,9 +69,9 @@ function ClienteWS(){
 			console.log("Ya puedes desplegar la flota");
 		})
 		this.socket.on("aJugar",function(res){
-			iu.mostrarModal("Batalla Naval","A jugar!");			
+			iu.mostrarModal("Batalla Naval","A jugar!Turno de "+res.turno);			
 			//tablero.mostrar(true);
-			iu.mostrarModal("Turno","Turno de "+res.turno);
+			
 		});
 		this.socket.on("jugadorAbandona",function(data){
 			iu.mostrarModal("Aviso","Jugador "+data.nick+" abandona");

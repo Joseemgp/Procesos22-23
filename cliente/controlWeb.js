@@ -18,20 +18,25 @@ function ControlWeb(){
     
     this.mostrarAgregarUsuario=function(){
         $('#mAU').remove();
+        $('#mInf').remove();
         var cadena= '<div class="row" id="mAU">';//'<form class="form-row needs-validation"  id="mAJ">';
-        cadena=cadena+'<div class="row"><h2>Batalla Naval</h2></div>';
+        //Muestra el titulo de Batalla Naval arriba en el centro de la Página
+
+        cadena=cadena+'<div class="row"><h2>Batalla Naval </h2></div>';
      
-       // cadena=cadena+'<div class="row"><div class="col"></div></div>';
+       
         cadena=cadena+'<div class="row">';
         cadena=cadena+'<div class="col">'
+        
+        cadena=cadena+'<div class="col"></div>';
         cadena=cadena+'<input type="text" class="form-control mb-2 mr-sm-2" id="usr" placeholder="Introduce tu nick (max 6 letras)" required></div>';
         cadena=cadena+'<div class="col">';
         cadena=cadena+'<button id="btnAU" class="btn btn-primary mb-2 mr-sm-2">Iniciar sesión</button>';
         cadena=cadena+'<a href="/auth/google" class="btn btn-primary mb-2 mr-sm-2">Accede con Google</a>';
         cadena=cadena+'</div></div>'; //' </form>';
         cadena=cadena+'<div id="nota"></div></div>';
+        cadena=cadena +  '<div class="row"><h7>Este proyecto se basa en el Proyecto de la Asignatura de Ingeniería del Software creado por Jose Antonio Gallud Lázaro</h7></div>'
 
-        cadena=cadena +  '<div class="row"><h2> Este proyecto se basa en el Proyecto de la Asignatura de Ingeniería del Software creado por Jose Antonio Gallud Lázaro</h2></div>'
         $("#agregarUsuario").append(cadena);     
           
 

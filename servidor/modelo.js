@@ -153,11 +153,13 @@ function Usuario(nick,juego){
 		this.tableroRival=new Tablero(dim);
 	}
 	this.inicializarFlota=function(){
-		// this.flota.push(new Barco("b2",2));
-		// this.flota.push(new Barco("b4",4));
-		this.flota["b2"]=new Barco("b2",2);
-		this.flota["b4"]=new Barco("b4",4);
-		// otros barcos: 1, 3, 5,...
+		
+	 this.flota["Velero"]=new Barco("b2",2);
+	 this.flota["PortaAviones"]=new Barco("b4",4);
+	this.flota["Crucero"]=new Barco("b3",3);
+	 this.flota["Canoa"]=new Barco("b1",1);
+		// this.flota["b2"]=new Barco("b2",2);
+		// this.flota["b4"]=new Barco("b4",4);
 	}
 	this.obtenerFlota=function(){
 		return this.flota;
@@ -341,22 +343,14 @@ function Partida(codigo,usr){
 	this.abandonarPartida = function (jugador) {
 
         if (jugador) {
+			rival = this.obtenerRival(jugador.nick)
+			this.fase = "final";
+			console.log("Fin de la partida");
+		console.log("Ha abandonado el jugador " + jugador.nick);
+				if(rival){
+				console.log("Ganador: " + rival.nick);
 
-
-
-            rival = this.obtenerRival(jugador.nick)
-
-            this.fase = "final";
-
-            console.log("Fin de la partida");
-
-            console.log("Ha abandonado el jugador " + jugador.nick);
-
-            if(rival){
-
-            console.log("Ganador: " + rival.nick);
-
-            }
+            		}
 
             jugador.logAbandonarPartida(jugador,this.codigo);
 
